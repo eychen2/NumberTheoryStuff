@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include<vector>
+#include <math.h>
 using namespace std;
 void swap(int &a, int &b)
 {
@@ -37,6 +38,12 @@ int gcd(int a, int b,unordered_map<int,vector<int>> &linear)
     }
     return b;
 }
+/**
+ * returns the least common multiple between a and b
+ * @param a input number
+ * @param b input number
+ * @return least common multiple between a and b
+ */
 int lcm(int a, int b)
 {
     return (a/gcd(a,b))*b;
@@ -59,6 +66,36 @@ string linearCombo(int a, int b, int lin)
     +to_string((lin/gcd_)*linear[gcd_].front()) +"*" +first +" + " +to_string((lin/gcd_)*linear[gcd_].back())
     +"*" +second +" = " +lin_;
 }
+vector<int> primes(int num)
+{
+
+}
+unordered_map<int,int> primeFactor(int num)
+{
+    unordered_map<int,int> result;
+    int count=0;
+    while(num%2==0)
+    {
+        ++count;
+        num=num/2;
+    }
+    if(count!=0)
+        result[2]=count;
+    count=0;
+    for(unsigned int i=3; i*i<num;i+=2)
+    {
+        while(num%i==0)
+        {
+            ++count;
+            num=num/i;
+        }
+        if(count!=0)
+            result[i]=count;
+        count=0;
+    }
+    return result;
+}
+
 int main() {
     std::cout << linearCombo(17,33,6) << std::endl;
     return 0;
