@@ -34,9 +34,18 @@ int gcd(int a, int b,unordered_map<int,vector<int>> &linear)
         int temp =b;
         b=a%b;
         a=temp;
-        linear[b]={linear[prevA].front()-linear[a].front(),linear[prevA].back()-linear[a].back()};
+        linear[b]={linear[prevA].front()-(prevA/temp)*linear[a].front(),linear[prevA].back()-(prevA/temp)*linear[a].back()};
     }
     return b;
+}
+int inverseMod(int numbers, int modulus)
+{
+    unordered_map<int,vector<int>> store;
+    if(gcd(modulus,numbers,store)!=1)
+        return -1;
+    else
+        return (store[1].back()+modulus)%modulus;
+
 }
 /**
  * returns the least common multiple between a and b
@@ -95,8 +104,28 @@ unordered_map<int,int> primeFactor(int num)
     }
     return result;
 }
+int CRT()
+{
+    cout<<"Please enter remainders and modulus to use Chinese Remainder Theorem"<<endl;
+    vector<int> remainders;
+    vector<int> modulus;
+    string cheese="yes";
+    while(cheese=="yes")
+    {
+        int temp;
+        cout<<"Remainder: "<<endl;
+        cin>>temp;
+        remainders.push_back(temp);
+        cout<<"Modulus: "<<endl;
+        cin>>temp;
+        modulus.push_back(temp);
+        remainders[0]=remainders[0]%temp;
+        cout<<"Are there more congruencies? Type \"yes\" to continue and anything else to stop"<<endl;
+        cin>>cheese;
+    }
 
+}
 int main() {
-    std::cout << linearCombo(17,33,6) << std::endl;
+    cout<<inverseMod(13,378)<<endl;
     return 0;
 }
