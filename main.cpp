@@ -45,6 +45,9 @@ int inverseMod(int numbers, int modulus)
         return -1;
     else
         return (store[1].back()+modulus)%modulus;
+}
+int powerModularArithmetic(int rem, int exponent, int mod)
+{
 
 }
 /**
@@ -104,6 +107,12 @@ unordered_map<int,int> primeFactor(int num)
     }
     return result;
 }
+bool millerRabin(int num)
+{
+    int a_1=2;
+    int a_2=3;
+
+}
 int CRT()
 {
     cout<<"Please enter remainders and modulus to use Chinese Remainder Theorem"<<endl;
@@ -125,7 +134,35 @@ int CRT()
     }
 
 }
+int legendre(int top, int bottom)
+{
+    if(top<-1)
+        return legendre(-1,bottom)* legendre(-1*top,bottom);
+    if(top==1)
+        return 1;
+    else if(top==-1)
+    {
+        if(bottom%4==1)
+            return 1;
+        else
+            return -1;
+    }
+    else if(top==2)
+    {
+        if(bottom%8==1||bottom%8==7)
+            return 1;
+        else
+            return -1;
+    }
+    else
+    {
+        if(bottom%4==1||top%4==1)
+            return legendre(bottom%top,top);
+        else
+            return -1* legendre(bottom%top,top);
+    }
+}
 int main() {
-    cout<<inverseMod(13,378)<<endl;
+    cout<<legendre(-2,101)<<endl;
     return 0;
 }
