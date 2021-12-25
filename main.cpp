@@ -9,6 +9,12 @@ void swap(int &a, int &b)
     a=b;
     b=temp;
 }
+/**
+ * Performs the Euclidean algorithm on a and b to determine the gcd
+ * @param a input
+ * @param b input
+ * @return gcd of a and b
+ */
 int gcd(int a, int b)
 {
     if(a<b)
@@ -22,6 +28,15 @@ int gcd(int a, int b)
     }
     return b;
 }
+/**
+ * Performs the Euclidean Algorithm and stores the coefficient of a and b at each step as (coeff(a),coeff(b))
+ * respectively in linear
+ * @param a input number
+ * @param b input number
+ * @param linear a vector to store data of steps of Euclidean Algorithm for different algorithms like
+ * finding linear combinations
+ * @return the gcd of the two numbers
+ */
 int gcd(int a, int b,unordered_map<int,vector<int>> &linear)
 {
     if(a<b)
@@ -38,6 +53,12 @@ int gcd(int a, int b,unordered_map<int,vector<int>> &linear)
     }
     return b;
 }
+/**
+ * returns the inverse of the input number given a certain modulus
+ * @param numbers the number you want to find the inverse of
+ * @param modulus the modulus you are working with
+ * @return the inverse of numbers in the modulus you are in
+ */
 int inverseMod(int numbers, int modulus)
 {
     unordered_map<int,vector<int>> store;
@@ -60,6 +81,14 @@ int lcm(int a, int b)
 {
     return (a/gcd(a,b))*b;
 }
+/**
+ *
+ * @param a input number
+ * @param b input number
+ * @param lin the number you want to see if there is a linear combination of a and b that makes lin
+ * @return the linear combination of the two numbers as a string or that it can't be
+ * expressed as a linear combination of the two
+ */
 string linearCombo(int a, int b, int lin)
 {
     unordered_map<int,vector<int>> linear;
@@ -82,6 +111,12 @@ vector<int> primes(int num)
 {
 
 }
+/**
+ * Uses a very rudimentary algorithm to prime factorize num.
+ * @param num the number you want to find the prime factor of
+ * @return the prime factorization of the number as a map with map[a]=b meaning a^b
+ * is a part of the prime factorization. If a does not exist, it is not a prime factor of num
+ */
 unordered_map<int,int> primeFactor(int num)
 {
     unordered_map<int,int> result;
@@ -113,6 +148,12 @@ bool millerRabin(int num)
     int a_2=3;
 
 }
+/**
+ * Performs the Chinese Remainder Theorem to solve a typical Chinese Remainder Theorem problem.
+ * A typical problem generally is "Find the smallest number that is 5mod7, 3mod4, and 4mod 9.
+ * Generally it is worded differently, but it boils down to that form.
+ * @return the smallest value that satisfies a typical Chinese Remainder Theorem problem.
+ */
 int CRT()
 {
     cout<<"Please enter remainders and modulus to use Chinese Remainder Theorem"<<endl;
@@ -132,8 +173,18 @@ int CRT()
         cout<<"Are there more congruencies? Type \"yes\" to continue and anything else to stop"<<endl;
         cin>>cheese;
     }
+    //Perform CRT algorithm
 
 }
+/**
+ * a legendre symbol is defined as (a/p) and is equal to 1 if a is a quadratic residue modulo p,
+ * -1 if a is a non-residue modulo p, and 0 if a%p=0. This returns the legendre symbol of
+ * (a/p) where a is top and p is bottom. The algorithm used is recursive based on facts
+ * I had to prove with legendre symbols.
+ * @param top the top
+ * @param bottom the bottom
+ * @return the legendre symbol of top/bottom
+ */
 int legendre(int top, int bottom)
 {
     if(top<-1)
@@ -162,6 +213,7 @@ int legendre(int top, int bottom)
             return -1* legendre(bottom%top,top);
     }
 }
+
 int main() {
     cout<<legendre(-2,101)<<endl;
     return 0;
