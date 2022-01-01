@@ -151,8 +151,10 @@ bool millerRabin(int num)
 /**
  * Performs the Chinese Remainder Theorem to solve a typical Chinese Remainder Theorem problem.
  * A typical problem generally is "Find the smallest number that is 5mod7, 3mod4, and 4mod 9.
- * Generally it is worded differently, but it boils down to that form.
- * @return the smallest value that satisfies a typical Chinese Remainder Theorem problem.
+ * Generally it is worded differently, but it boils down to that form. For the Chinese Remainder Theorem
+ * to work, the modulus must be pairwise coprime and we will assume the user knows that
+ * @return the smallest positive value that satisfies a typical Chinese Remainder Theorem problem.
+ * Returns -1 if it is not possible
  */
 int CRT()
 {
@@ -160,6 +162,8 @@ int CRT()
     vector<int> remainders;
     vector<int> modulus;
     string cheese="yes";
+    string cheese2;
+    int a =0;
     while(cheese=="yes")
     {
         int temp;
@@ -169,12 +173,38 @@ int CRT()
         cout<<"Modulus: "<<endl;
         cin>>temp;
         modulus.push_back(temp);
-        remainders[0]=remainders[0]%temp;
-        cout<<"Are there more congruencies? Type \"yes\" to continue and anything else to stop"<<endl;
-        cin>>cheese;
+        remainders[a]=remainders[a]%temp;
+        cout<<"You typed in "<<remainders[a]<<"mod"<<modulus[a]<<" is this correct? Type \"yes\" if it is"<<endl;
+        cin>>cheese2;
+        if(cheese2!="yes")
+        {
+            remainders.pop_back();
+            modulus.pop_back();
+            cout<<"Retype"<<endl;
+        }
+        else
+        {
+            ++a;
+            cout<<"Are there more congruencies? Type \"yes\" to continue and anything else to stop"<<endl;
+            cin>>cheese;
+        }
+
     }
     //Perform CRT algorithm
-
+    int modulo=1;
+    for(unsigned int i=0; i<modulus.size();++i)
+        modulo*=modulus[i];
+    vector<int> forAlgorithm;
+    for(unsigned int i=0; i<modulus.size();++i)
+    {
+        forAlgorithm.emplace_back(inverseMod(modulo/modulus[i]%modulus[i],modulus[i]));
+    }
+    int ans=0;
+    for(unsigned int i=0; i<forAlgorithm.size();++i)
+    {
+        ans=(ans+forAlgorithm[i]*remainders[i]*modulo/modulus[i])%modulo;
+    }
+    return ans;
 }
 /**
  * a legendre symbol is defined as (a/p) and is equal to 1 if a is a quadratic residue modulo p,
@@ -215,6 +245,6 @@ int legendre(int top, int bottom)
 }
 
 int main() {
-    cout<<legendre(-2,101)<<endl;
+    cout<<CRT()<<endl;
     return 0;
 }
